@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sustainability Impact Calculator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        font-weight: bold;
+      }
+      input[type="number"] {
+        padding: 8px;
+        width: 200px;
+      }
+      .btn {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #45a049;
+      }
+      canvas {
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Sustainability Impact Calculator</h1>
+
+      <!-- User Input Form -->
+      <div class="form-group">
+        <label for="energy">Monthly Energy Consumption (kWh):</label>
+        <input type="number" id="energy" min="0" />
+      </div>
+
+      <div class="form-group">
+        <label for="water">Daily Water Consumption (liters):</label>
+        <input type="number" id="water" min="0" />
+      </div>
+
+      <div class="form-group">
+        <label for="waste">Weekly Waste Generation (kg):</label>
+        <input type="number" id="waste" min="0" />
+      </div>
+
+      <div class="form-group">
+        <label for="transport">Weekly Distance Travelled by Car (km):</label>
+        <input type="number" id="transport" min="0" />
+      </div>
+
+      <button class="btn" id="calculate">Calculate Impact</button>
+
+      <!-- Sustainability Impact Results -->
+      <div id="results" style="display: none">
+        <h2>Your Sustainability Impact</h2>
+        <canvas id="carbonChart"></canvas>
+        <p id="tips"></p>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      document
+        .getElementById("calculate")
+        .addEventListener("click", function () {
+          const energy = document.getElementById("energy").value;
+          const water = document.getElementById("water").value;
+          const waste = document.getElementById("waste").value;
+          const transport = document.getElementById("transport").value;
+
+          const carbonFromEnergy = energy * 0.92; // kg CO2
+          const carbonFromTransport = transport * 0.23; // kg CO2 (average)
+          const waterImpact = water * 365; // annual water usage (liters)
+          const wasteImpact = waste * 52; // annual waste production (kg)
+
+          // Display results
+          document.getElementById("results").style.display = "block";
+          document.getElementById(
+            "tips"
+          ).innerHTML = `Carbon footprint from energy: ${carbonFromEnergy.toFixed(
+            2
+          )} kg CO2/year.<br>
+                                                     Carbon footprint from transportation: ${carbonFromTransport.toFixed(
+                                                       2
+                                                     )} kg CO2/year.<br>
+                                                     Annual water consumption: ${waterImpact} liters.<br>
+                                                     Annual waste generation: ${wasteImpact} kg.<br><br>
+                                                     <strong>Personalized Tips:</strong><br>
+                                                     - Reduce energy consumption with efficient appliances.<br>
+                                                     - Carpool or use public transport to reduce carbon emissions.<br>
+                                                     - Fix water leaks and reduce water usage.`;
+
+          // Generate pie chart
+          const ctx = document.getElementById("carbonChart").getContext("2d");
+          new Chart(ctx, {
+            type: "pie",
+            data: {
+              labels: ["Energy", "Transportation", "Water", "Waste"],
+              datasets: [
+                {
+                  data: [
+                    carbonFromEnergy,
+                    carbonFromTransport,
+                    waterImpact,
+                    wasteImpact,
+                  ],
+                  backgroundColor: ["#FF5733", "#33FF57", "#3357FF", "#57FF33"],
+                },
+              ],
+            },
+          });
+        });
+    </script>
+  </body>
+</html>
