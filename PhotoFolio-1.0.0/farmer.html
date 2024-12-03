@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farmer Dashboard</title>
+    <link rel="stylesheet" href="farmer.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1>🌾 FarmConnect</h1>
+      <p>Your Gateway to Smarter Farming</p>
+    </header>
+
+    <main>
+      <!-- Upload Crops Section -->
+      <section class="upload-section fade-in">
+        <h2>📤 Upload Your Crops</h2>
+        <form id="upload-form" class="form">
+          <div class="form-group">
+            <label for="crop-name">Crop Name</label>
+            <input
+              type="text"
+              id="crop-name"
+              placeholder="Enter crop name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="crop-price">Price per Kg</label>
+            <input
+              type="number"
+              id="crop-price"
+              placeholder="Enter price per Kg"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="crop-image">Upload Image</label>
+            <input type="file" id="crop-image" accept="image/*" required />
+          </div>
+          <button type="submit" class="btn">Upload Crop</button>
+        </form>
+      </section>
+
+      <!-- Crop Analysis Section -->
+      <section class="analysis-section fade-in">
+        <h2>📊 Crop Analysis</h2>
+        <div class="graph-container">
+          <canvas id="crop-chart"></canvas>
+        </div>
+      </section>
+
+      <!-- Chat Section -->
+      <section class="chat-section fade-in">
+        <h2>💬 Vendor Chat</h2>
+        <div class="chat-box">
+          <div class="messages" id="messages">
+            <!-- Messages will appear here -->
+          </div>
+          <div class="chat-input">
+            <input
+              type="text"
+              id="chat-message"
+              placeholder="Type your message"
+            />
+            <button id="send-message" class="btn">Send</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2024 FarmConnect. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll(".fade-in");
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        });
+
+        sections.forEach((section) => observer.observe(section));
+
+        // Initialize Chart.js
+        const ctx = document.getElementById("crop-chart").getContext("2d");
+        const cropChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: ["Wheat", "Rice", "Maize", "Soybean", "Potato"],
+            datasets: [
+              {
+                label: "Average Prices (₹)",
+                data: [30, 25, 40, 20, 50], // Default prices
+                borderColor: "#4CAF50",
+                backgroundColor: "rgba(76, 175, 80, 0.2)",
+                fill: true,
+              },
+            ],
+          },
+        });
+
+        // Handle the form submission for crop upload
+        const form = document.getElementById("upload-form");
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const cropName = document.getElementById("crop-name").value;
+          const cropPrice = document.getElementById("crop-price").value;
+          const cropImage = document.getElementById("crop-image").files[0];
+
+          if (cropName && cropPrice) {
+            // Update Chart with the new crop data
+            updateChart(cropName, parseFloat(cropPrice));
+
+            // Optionally show a message or image
+            const message = document.createElement("div");
+            message.textContent = `Crop Uploaded: ${cropName} | Price: ₹${cropPrice}`;
+            document.getElementById("messages").appendChild(message);
+          }
+        });
+
+        // Update chart data dynamically
+        function updateChart(cropName, cropPrice) {
+          const chartLabels = cropChart.data.labels;
+          const chartData = cropChart.data.datasets[0].data;
+
+          // Log inputs for debugging
+          console.log("Crop Name:", cropName);
+          console.log("Crop Price:", cropPrice);
+
+          // Ensure cropPrice is a valid number
+          if (isNaN(cropPrice) || cropPrice <= 0) {
+            console.error(
+              "Invalid price value. Price must be a positive number."
+            );
+            return; // Exit the function if the price is invalid
+          }
+
+          // Check if the crop already exists in the chart
+          const index = chartLabels.indexOf(cropName);
+
+          if (index === -1) {
+            // Add new crop to the chart
+            chartLabels.push(cropName);
+            chartData.push(cropPrice);
+          } else {
+            // Update price for the existing crop
+            chartData[index] = cropPrice;
+          }
+
+          // Log updated chart data for debugging
+          console.log("Updated Chart Data:", chartData);
+
+          // Refresh chart to reflect new data
+          cropChart.update();
+        }
+
+        // Chat functionality
+        const chatMessages = document.getElementById("messages");
+        document
+          .getElementById("send-message")
+          .addEventListener("click", () => {
+            const input = document.getElementById("chat-message");
+            if (input.value.trim()) {
+              const message = document.createElement("div");
+              message.className = "message";
+              message.textContent = `Farmer: ${input.value}`;
+              chatMessages.appendChild(message);
+              input.value = "";
+            }
+          });
+      });
+    </script>
+  </body>
+</html>
