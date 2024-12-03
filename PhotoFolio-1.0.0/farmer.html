@@ -43,8 +43,13 @@
               style="display: none; margin-top: 10px; max-width: 200px"
             />
           </div>
-          <button type="submit" class="btn">Upload Crop</button>
+          <button type="submit" class="btn" id="upload-crop-btn">
+            Upload Crop
+          </button>
         </form>
+        <button id="clear-crops" class="btn" id="clear-crops-btn">
+          Clear All Crops
+        </button>
       </section>
 
       <!-- Crop Analysis Section -->
@@ -125,6 +130,7 @@
         const uploadedCropsList = document.getElementById(
           "uploaded-crops-list"
         );
+        const clearCropsButton = document.getElementById("clear-crops");
 
         cropImageInput.addEventListener("change", function () {
           const file = cropImageInput.files[0];
@@ -213,18 +219,44 @@
             return;
           }
 
-          crops.forEach((crop) => {
+          crops.forEach((crop, index) => {
             const cropCard = document.createElement("div");
             cropCard.classList.add("crop-card");
 
             cropCard.innerHTML = `
-              <img src="${crop.image}" alt="${crop.cropName}" style="max-width: 150px;"/>
+              <img src="${crop.image}" alt="${crop.cropName}" style="max-width: 150px"/>
               <h3>${crop.cropName}</h3>
               <p>Price: ₹${crop.price} per Kg</p>
+              <button class="buy-btn" data-index="${index}">Buy</button>
             `;
             uploadedCropsList.appendChild(cropCard);
           });
+
+          // Add event listeners to "Buy" buttons
+          const buyButtons = document.querySelectorAll(".buy-btn");
+          buyButtons.forEach((button) => {
+            button.addEventListener("click", (e) => {
+              const index = e.target.dataset.index;
+              buyCrop(index);
+            });
+          });
         }
+
+        // Buy crop functionality (removes the crop from the list)
+        function buyCrop(index) {
+          const crops = JSON.parse(localStorage.getItem("crops")) || [];
+          crops.splice(index, 1); // Remove crop from the list
+          localStorage.setItem("crops", JSON.stringify(crops));
+
+          // Update the crop list
+          displayUploadedCrops();
+        }
+
+        // Clear all crops functionality
+        clearCropsButton.addEventListener("click", () => {
+          localStorage.removeItem("crops");
+          displayUploadedCrops();
+        });
 
         // Initial load of uploaded crops
         displayUploadedCrops();

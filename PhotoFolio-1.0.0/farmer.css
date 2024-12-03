@@ -78,17 +78,18 @@ input[type="file"] {
 }
 
 .btn {
-  display: inline-block;
   padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
   color: white;
-  background: #4caf50;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
-  font-size: 1em;
-  transition: background 0.3s ease-in-out;
+  margin-bottom: 10px; /* Adds space between buttons */
 }
 
+#upload-crop-btn {
+  margin-right: 10px; /* Adds gap specifically between "Upload Crop" and "Clear All Crops" buttons */
+}
 .btn:hover {
   background: #45a049;
 }
