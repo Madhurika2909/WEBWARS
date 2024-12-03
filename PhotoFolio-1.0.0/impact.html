@@ -3,98 +3,89 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Carbon Footprint Calculator</title>
+    <title>Environmental Footprint Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
+      /* General Styles */
       body {
         font-family: "Arial", sans-serif;
         margin: 0;
         padding: 0;
-        background: linear-gradient(to bottom, #e8f5e9, #c8e6c9);
-        text-align: center;
+        background-color: #f8f9fa;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
       }
 
       .container {
-        padding: 20px;
-        animation: fadeIn 1.5s ease-in-out;
+        text-align: center;
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 600px;
       }
 
-      .hidden {
-        display: none;
+      .logo {
+        margin-bottom: 20px;
+      }
+
+      .logo img {
+        width: 80px;
       }
 
       h1 {
-        color: #2e7d32;
-        margin-bottom: 20px;
-        text-transform: uppercase;
+        font-size: 28px;
+        color: #2d333a;
       }
 
       p {
-        color: #4caf50;
-        font-size: 18px;
+        font-size: 16px;
+        color: #5a6a73;
+        margin-bottom: 20px;
       }
 
-      label {
-        color: #388e3c;
-        margin-top: 10px;
-      }
-
+      select,
       input,
       button {
         width: 80%;
         padding: 10px;
         margin: 10px auto;
         font-size: 16px;
-        border: 1px solid #4caf50;
+        border: 1px solid #ddd;
         border-radius: 5px;
         outline: none;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease-in-out;
       }
 
-      input:hover,
-      button:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-      }
-
       button {
-        background-color: #4caf50;
+        background-color: #3cb371;
         color: white;
         cursor: pointer;
+        font-weight: bold;
       }
 
       button:hover {
-        background-color: #388e3c;
+        background-color: #2e8b57;
       }
 
-      canvas {
-        margin: 20px auto;
-        display: block;
+      input:hover,
+      select:hover {
+        border-color: #3cb371;
       }
 
-      ul {
-        text-align: left;
-        margin: 20px auto;
-        padding: 0 10%;
-        list-style: none;
+      .footer {
+        font-size: 12px;
+        color: #5a6a73;
+        margin-top: 20px;
       }
 
-      ul li {
-        margin: 10px 0;
-        color: #2e7d32;
-      }
-
-      .image-container {
-        margin: 20px auto;
-        width: 100px;
-        height: 100px;
-      }
-
-      .image-container img {
-        width: 100%;
-        height: auto;
-        border-radius: 50%;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      .hidden {
+        display: none;
       }
 
       /* Animations */
@@ -108,79 +99,108 @@
           transform: translateY(0);
         }
       }
+
+      .fade-in {
+        animation: fadeIn 1s ease-out;
+      }
+
+      #chartContainer {
+        margin-top: 20px;
+      }
+
+      canvas {
+        margin-top: 20px;
+        width: 100% !important;
+        height: auto !important;
+      }
     </style>
   </head>
   <body>
-    <!-- Landing Page -->
-    <div id="landingPage" class="container">
-      <div class="image-container">
-        <img src="https://via.placeholder.com/100" alt="Leaf Icon" />
+    <!-- Welcome Page -->
+    <div id="welcomePage" class="container fade-in">
+      <div class="logo">
+        <img src="https://via.placeholder.com/80" alt="Logo" />
       </div>
-      <h1>Welcome to the Carbon Footprint Calculator</h1>
-      <p>Click OK to proceed.</p>
-      <button onclick="goToNamePage()">OK</button>
+      <h1>Environmental Footprint Calculator</h1>
+      <p>Let's calculate your environmental impact.</p>
+      <p>
+        The test takes approximately <b>5 minutes</b> and covers three sections:
+        <b>Housing</b>, <b>Travel</b>, and <b>Consumption</b>.
+      </p>
+      <select id="country">
+        <option value="" selected disabled>Select your country</option>
+        <option value="India">India</option>
+        <option value="USA">USA</option>
+        <option value="UK">UK</option>
+      </select>
+      <button onclick="goToNamePage()">Start the Test</button>
+      <div class="footer">Powered by Sustainability</div>
     </div>
 
-    <!-- Name Input Page -->
-    <div id="namePage" class="container hidden">
+    <!-- Name Page -->
+    <div id="namePage" class="container hidden fade-in">
       <h1>Enter Your Name</h1>
-      <input type="text" id="name" placeholder="Enter your name" />
+      <input type="text" id="name" placeholder="Your Name" />
       <button onclick="goToDataPage()">Next</button>
     </div>
 
     <!-- Data Input Page -->
-    <div id="dataPage" class="container hidden">
-      <h1>Enter Your Monthly Data</h1>
-      <label for="energyConsumption">Energy Consumption (kWh/month):</label>
+    <div id="dataPage" class="container hidden fade-in">
+      <h1>Enter Your Data</h1>
+      <p>We need the following data to calculate your carbon footprint:</p>
       <input
         type="number"
-        id="energyConsumption"
-        placeholder="Enter your monthly energy consumption"
+        id="energy"
+        placeholder="Energy Consumption (kWh/month)"
       />
-
-      <label for="transportation">Transportation (km/month):</label>
       <input
         type="number"
-        id="transportation"
-        placeholder="Enter your monthly transportation distance"
+        id="transport"
+        placeholder="Transportation (km/month)"
       />
-
-      <label for="foodConsumption">Food Consumption (kg/month):</label>
       <input
         type="number"
-        id="foodConsumption"
-        placeholder="Enter your monthly food consumption"
+        id="food"
+        placeholder="Food Consumption (kg/month)"
       />
-
-      <label for="wasteGeneration">Waste Generation (kg/month):</label>
       <input
         type="number"
-        id="wasteGeneration"
-        placeholder="Enter your monthly waste generation"
+        id="waste"
+        placeholder="Waste Generation (kg/month)"
       />
-
       <button onclick="calculateFootprint()">Calculate</button>
     </div>
 
     <!-- Results Page -->
-    <div id="resultsPage" class="container hidden">
-      <h1>Carbon Footprint Results</h1>
-      <canvas id="carbonChart" width="400" height="400"></canvas>
-      <h2>Sustainability Tips</h2>
+    <div id="resultsPage" class="container hidden fade-in">
+      <h1>Your Carbon Footprint</h1>
+      <p><b id="footprintResult"></b> kg CO2 per month.</p>
+      <p>Recommendations to improve sustainability:</p>
       <ul id="tips"></ul>
-      <button onclick="location.reload()">Restart</button>
+
+      <!-- Chart Container -->
+      <div id="chartContainer">
+        <h2>Carbon Footprint Breakdown</h2>
+        <canvas id="footprintChart"></canvas>
+      </div>
+
+      <button onclick="restart()">Start Over</button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
       function goToNamePage() {
-        document.getElementById("landingPage").classList.add("hidden");
+        const country = document.getElementById("country").value;
+        if (!country) {
+          alert("Please select your country.");
+          return;
+        }
+        document.getElementById("welcomePage").classList.add("hidden");
         document.getElementById("namePage").classList.remove("hidden");
       }
 
       function goToDataPage() {
         const name = document.getElementById("name").value.trim();
-        if (name === "") {
+        if (!name) {
           alert("Please enter your name.");
           return;
         }
@@ -189,54 +209,57 @@
       }
 
       function calculateFootprint() {
-        const energy =
-          parseFloat(document.getElementById("energyConsumption").value) || 0;
+        const energy = parseFloat(document.getElementById("energy").value) || 0;
         const transport =
-          parseFloat(document.getElementById("transportation").value) || 0;
-        const food =
-          parseFloat(document.getElementById("foodConsumption").value) || 0;
-        const waste =
-          parseFloat(document.getElementById("wasteGeneration").value) || 0;
+          parseFloat(document.getElementById("transport").value) || 0;
+        const food = parseFloat(document.getElementById("food").value) || 0;
+        const waste = parseFloat(document.getElementById("waste").value) || 0;
 
-        const carbonFootprint = {
-          Energy: energy * 0.7,
-          Transportation: transport * 0.12,
-          Food: food * 2.5,
-          Waste: waste * 1.5,
-        };
-
-        displayResults(carbonFootprint);
-      }
-
-      function displayResults(carbonFootprint) {
-        document.getElementById("dataPage").classList.add("hidden");
-        document.getElementById("resultsPage").classList.remove("hidden");
-
-        const labels = Object.keys(carbonFootprint);
-        const values = Object.values(carbonFootprint);
-
-        const ctx = document.getElementById("carbonChart").getContext("2d");
-        new Chart(ctx, {
-          type: "bar",
-          data: {
-            labels,
-            datasets: [
-              {
-                label: "Carbon Footprint (kg CO2)",
-                data: values,
-                backgroundColor: ["#4caf50", "#2196f3", "#ff9800", "#f44336"],
-              },
-            ],
-          },
-        });
+        const totalFootprint =
+          energy * 0.7 + transport * 0.12 + food * 2.5 + waste * 1.5;
+        document.getElementById("footprintResult").innerText =
+          totalFootprint.toFixed(2);
 
         const tips = document.getElementById("tips");
         tips.innerHTML = `
-        <li>Reduce energy consumption by using energy-efficient appliances.</li>
-        <li>Switch to public transportation or carpool to minimize emissions.</li>
-        <li>Adopt a plant-based diet to lower your food carbon footprint.</li>
-        <li>Recycle and reduce waste generation to improve sustainability.</li>
+        <li>Use energy-efficient appliances.</li>
+        <li>Switch to carpooling or public transport.</li>
+        <li>Consider a plant-based diet.</li>
+        <li>Recycle and compost to reduce waste.</li>
       `;
+
+        document.getElementById("dataPage").classList.add("hidden");
+        document.getElementById("resultsPage").classList.remove("hidden");
+
+        // Create the chart
+        const ctx = document.getElementById("footprintChart").getContext("2d");
+        new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: ["Energy", "Transport", "Food", "Waste"],
+            datasets: [
+              {
+                label: "Carbon Footprint (kg CO2)",
+                data: [energy * 0.7, transport * 0.12, food * 2.5, waste * 1.5],
+                backgroundColor: ["#3cb371", "#FFD700", "#FF6347", "#87CEEB"],
+                borderColor: ["#2e8b57", "#DAA520", "#CD5C5C", "#4682B4"],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: true,
+              },
+            },
+          },
+        });
+      }
+
+      function restart() {
+        location.reload();
       }
     </script>
   </body>
