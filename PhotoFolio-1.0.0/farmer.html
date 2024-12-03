@@ -38,6 +38,10 @@
           <div class="form-group">
             <label for="crop-image">Upload Image</label>
             <input type="file" id="crop-image" accept="image/*" required />
+            <img
+              id="image-preview"
+              style="display: none; margin-top: 10px; max-width: 200px"
+            />
           </div>
           <button type="submit" class="btn">Upload Crop</button>
         </form>
@@ -48,6 +52,14 @@
         <h2>📊 Crop Analysis</h2>
         <div class="graph-container">
           <canvas id="crop-chart"></canvas>
+        </div>
+      </section>
+
+      <!-- Uploaded Crops List Section -->
+      <section class="uploaded-crops-section fade-in">
+        <h2>🌾 Uploaded Crops</h2>
+        <div id="uploaded-crops-list">
+          <!-- Uploaded crops will appear here -->
         </div>
       </section>
 
@@ -108,6 +120,24 @@
 
         // Handle the form submission for crop upload
         const form = document.getElementById("upload-form");
+        const cropImageInput = document.getElementById("crop-image");
+        const imagePreview = document.getElementById("image-preview");
+        const uploadedCropsList = document.getElementById(
+          "uploaded-crops-list"
+        );
+
+        cropImageInput.addEventListener("change", function () {
+          const file = cropImageInput.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function () {
+              imagePreview.src = reader.result;
+              imagePreview.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
         form.addEventListener("submit", (e) => {
           e.preventDefault();
 
@@ -115,14 +145,39 @@
           const cropPrice = document.getElementById("crop-price").value;
           const cropImage = document.getElementById("crop-image").files[0];
 
-          if (cropName && cropPrice) {
-            // Update Chart with the new crop data
-            updateChart(cropName, parseFloat(cropPrice));
+          if (cropName && cropPrice && cropImage) {
+            // Store crop data in localStorage
+            const reader = new FileReader();
+            reader.onloadend = function () {
+              const cropData = {
+                cropName: cropName,
+                price: parseFloat(cropPrice),
+                image: reader.result, // Image data URL
+              };
 
-            // Optionally show a message or image
-            const message = document.createElement("div");
-            message.textContent = `Crop Uploaded: ${cropName} | Price: ₹${cropPrice}`;
-            document.getElementById("messages").appendChild(message);
+              const existingCrops =
+                JSON.parse(localStorage.getItem("crops")) || [];
+              existingCrops.push(cropData);
+              localStorage.setItem("crops", JSON.stringify(existingCrops));
+
+              // Update Chart with the new crop data
+              updateChart(cropName, parseFloat(cropPrice));
+
+              // Optionally show a message or image
+              const message = document.createElement("div");
+              message.textContent = `Crop Uploaded: ${cropName} | Price: ₹${cropPrice}`;
+              document.getElementById("messages").appendChild(message);
+
+              // Display uploaded crops in the list
+              displayUploadedCrops();
+
+              // Reset the form
+              form.reset();
+              imagePreview.style.display = "none";
+            };
+            reader.readAsDataURL(cropImage);
+          } else {
+            alert("Please fill out all fields!");
           }
         });
 
@@ -131,36 +186,48 @@
           const chartLabels = cropChart.data.labels;
           const chartData = cropChart.data.datasets[0].data;
 
-          // Log inputs for debugging
-          console.log("Crop Name:", cropName);
-          console.log("Crop Price:", cropPrice);
-
-          // Ensure cropPrice is a valid number
           if (isNaN(cropPrice) || cropPrice <= 0) {
-            console.error(
-              "Invalid price value. Price must be a positive number."
-            );
-            return; // Exit the function if the price is invalid
+            console.error("Invalid price value.");
+            return;
           }
 
-          // Check if the crop already exists in the chart
           const index = chartLabels.indexOf(cropName);
 
           if (index === -1) {
-            // Add new crop to the chart
             chartLabels.push(cropName);
             chartData.push(cropPrice);
           } else {
-            // Update price for the existing crop
             chartData[index] = cropPrice;
           }
 
-          // Log updated chart data for debugging
-          console.log("Updated Chart Data:", chartData);
-
-          // Refresh chart to reflect new data
           cropChart.update();
         }
+
+        // Display uploaded crops dynamically
+        function displayUploadedCrops() {
+          const crops = JSON.parse(localStorage.getItem("crops")) || [];
+          uploadedCropsList.innerHTML = ""; // Clear the list before adding
+
+          if (crops.length === 0) {
+            uploadedCropsList.innerHTML = "<p>No crops uploaded yet.</p>";
+            return;
+          }
+
+          crops.forEach((crop) => {
+            const cropCard = document.createElement("div");
+            cropCard.classList.add("crop-card");
+
+            cropCard.innerHTML = `
+              <img src="${crop.image}" alt="${crop.cropName}" style="max-width: 150px;"/>
+              <h3>${crop.cropName}</h3>
+              <p>Price: ₹${crop.price} per Kg</p>
+            `;
+            uploadedCropsList.appendChild(cropCard);
+          });
+        }
+
+        // Initial load of uploaded crops
+        displayUploadedCrops();
 
         // Chat functionality
         const chatMessages = document.getElementById("messages");

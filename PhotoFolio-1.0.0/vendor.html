@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vendor Dashboard</title>
+    <link rel="stylesheet" href="vendor.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1>🌾 FarmConnect - Vendor Dashboard</h1>
+      <p>Browse and Buy Crops from Farmers</p>
+    </header>
+
+    <main>
+      <!-- Crop Listing Section -->
+      <section class="crop-listing">
+        <h2>Available Crops</h2>
+        <div class="crop-container" id="crop-container">
+          <!-- Crop data will be dynamically inserted here -->
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2024 FarmConnect. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+      // Fetch crops from localStorage and display them
+      function displayCrops() {
+        const cropContainer = document.getElementById("crop-container");
+        const crops = JSON.parse(localStorage.getItem("crops")) || [];
+
+        if (crops.length === 0) {
+          cropContainer.innerHTML = "<p>No crops available.</p>";
+          return;
+        }
+
+        crops.forEach((crop) => {
+          const cropCard = document.createElement("div");
+          cropCard.classList.add("crop-card");
+
+          cropCard.innerHTML = `
+            <img src="${crop.image}" alt="${crop.cropName}" />
+            <div class="crop-info">
+              <h3>${crop.cropName}</h3>
+              <p>Price: ₹${crop.price} per Kg</p>
+              <p><strong>Farmer:</strong> ${crop.farmerName}</p>
+              <p><strong>Contact:</strong> ${crop.contact}</p>
+              <button class="btn purchase-btn">Buy Crop</button>
+            </div>
+          `;
+
+          cropContainer.appendChild(cropCard);
+
+          // Add event listener for the purchase button
+          cropCard
+            .querySelector(".purchase-btn")
+            .addEventListener("click", () => {
+              alert(
+                `You have purchased ${crop.cropName} from ${crop.farmerName} for ₹${crop.price} per Kg.`
+              );
+            });
+        });
+      }
+
+      // Display crops on page load
+      displayCrops();
+    </script>
+  </body>
+</html>
