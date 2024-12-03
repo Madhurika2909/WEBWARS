@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Environmental Footprint Calculator</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
       /* General Styles */
       body {
@@ -21,30 +20,24 @@
 
       .container {
         text-align: center;
-        background: #ffffff;
+        background: url("./assets/img/gallery/im.webp") no-repeat center center;
+        background-size: cover;
         padding: 40px;
         border-radius: 15px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         width: 90%;
         max-width: 600px;
-      }
-
-      .logo {
-        margin-bottom: 20px;
-      }
-
-      .logo img {
-        width: 80px;
+        color: #000; /* Changed text color to black */
       }
 
       h1 {
         font-size: 28px;
-        color: #2d333a;
+        color: #000; /* Black text for the heading */
       }
 
       p {
         font-size: 16px;
-        color: #5a6a73;
+        color: #000; /* Black text for paragraph */
         margin-bottom: 20px;
       }
 
@@ -80,7 +73,7 @@
 
       .footer {
         font-size: 12px;
-        color: #5a6a73;
+        color: #000; /* Black text for footer */
         margin-top: 20px;
       }
 
@@ -118,9 +111,6 @@
   <body>
     <!-- Welcome Page -->
     <div id="welcomePage" class="container fade-in">
-      <div class="logo">
-        <img src="https://via.placeholder.com/80" alt="Logo" />
-      </div>
       <h1>Environmental Footprint Calculator</h1>
       <p>Let's calculate your environmental impact.</p>
       <p>
@@ -177,16 +167,14 @@
       <p><b id="footprintResult"></b> kg CO2 per month.</p>
       <p>Recommendations to improve sustainability:</p>
       <ul id="tips"></ul>
-
-      <!-- Chart Container -->
+      <button onclick="restart()">Start Over</button>
+      <!-- Chart for results -->
       <div id="chartContainer">
-        <h2>Carbon Footprint Breakdown</h2>
         <canvas id="footprintChart"></canvas>
       </div>
-
-      <button onclick="restart()">Start Over</button>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
       function goToNamePage() {
         const country = document.getElementById("country").value;
@@ -221,7 +209,7 @@
           totalFootprint.toFixed(2);
 
         const tips = document.getElementById("tips");
-        tips.innerHTML = `
+        tips.innerHTML = ` 
         <li>Use energy-efficient appliances.</li>
         <li>Switch to carpooling or public transport.</li>
         <li>Consider a plant-based diet.</li>
@@ -231,7 +219,11 @@
         document.getElementById("dataPage").classList.add("hidden");
         document.getElementById("resultsPage").classList.remove("hidden");
 
-        // Create the chart
+        // Display chart
+        displayChart(energy, transport, food, waste);
+      }
+
+      function displayChart(energy, transport, food, waste) {
         const ctx = document.getElementById("footprintChart").getContext("2d");
         new Chart(ctx, {
           type: "bar",
@@ -239,19 +231,40 @@
             labels: ["Energy", "Transport", "Food", "Waste"],
             datasets: [
               {
-                label: "Carbon Footprint (kg CO2)",
+                label: "Carbon Footprint Contribution (kg CO2)",
                 data: [energy * 0.7, transport * 0.12, food * 2.5, waste * 1.5],
-                backgroundColor: ["#3cb371", "#FFD700", "#FF6347", "#87CEEB"],
-                borderColor: ["#2e8b57", "#DAA520", "#CD5C5C", "#4682B4"],
-                borderWidth: 1,
+                backgroundColor: ["#3cb371", "#ff6347", "#ffa500", "#00bfff"],
+                borderColor: ["#2e8b57", "#cc4f28", "#e09d28", "#0096c7"],
+                borderWidth: 10, // Increased border width for visibility
               },
             ],
           },
           options: {
             responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: {
+                  color: "#ddd", // Dark grid lines for better contrast
+                },
+                ticks: {
+                  color: "#ddd", // Dark ticks for better visibility
+                },
+              },
+              x: {
+                grid: {
+                  color: "#ddd", // Dark grid lines for x-axis as well
+                },
+                ticks: {
+                  color: "#ddd", // Dark ticks for x-axis
+                },
+              },
+            },
             plugins: {
               legend: {
-                display: true,
+                labels: {
+                  color: "#333", // Dark text color for legend
+                },
               },
             },
           },
