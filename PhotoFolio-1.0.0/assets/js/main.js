@@ -6,7 +6,7 @@
 * License: https://bootstrapmade.com/license/
 */
 
-(function() {
+(function () {
   "use strict";
 
   /**
@@ -50,7 +50,7 @@
    * Toggle mobile nav dropdowns
    */
   document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function(e) {
+    navmenu.addEventListener('click', function (e) {
       e.preventDefault();
       this.parentNode.classList.toggle('active');
       this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
@@ -118,7 +118,7 @@
    * Init swiper sliders
    */
   function initSwiper() {
-    document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
+    document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
       let config = JSON.parse(
         swiperElement.querySelector(".swiper-config").innerHTML.trim()
       );
@@ -132,5 +132,41 @@
   }
 
   window.addEventListener("load", initSwiper);
+
+})();
+
+(function () {
+  "use strict";
+
+  // Get the button to toggle light/dark mode
+  const modeToggleBtn = document.getElementById("mode-toggle");
+
+  // Function to set mode
+  function setMode(mode) {
+    const body = document.querySelector('body');
+    if (mode === 'light') {
+      body.classList.add('light-mode');
+      body.classList.remove('dark-mode');
+      modeToggleBtn.innerHTML = '🌙'; // Set to moon for dark mode
+    } else {
+      body.classList.add('dark-mode');
+      body.classList.remove('light-mode');
+      modeToggleBtn.innerHTML = '🌞'; // Set to sun for light mode
+    }
+  }
+
+  // Initialize mode on page load from localStorage
+  window.addEventListener('load', () => {
+    const savedMode = localStorage.getItem('mode') || 'dark';
+    setMode(savedMode);
+  });
+
+  // Toggle between dark and light mode on button click
+  modeToggleBtn.addEventListener('click', () => {
+    const currentMode = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+    const newMode = currentMode === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('mode', newMode);  // Save the mode in localStorage
+    setMode(newMode);
+  });
 
 })();
