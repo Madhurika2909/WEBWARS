@@ -12,13 +12,15 @@
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Cardo",  sans-serif;
-  --nav-font: "Inter",  sans-serif;
+  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Cardo", sans-serif;
+  --nav-font: "Inter", sans-serif;
 }
 
 /* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root { 
+:root {
   --background-color: #000000; /* Background color for the entire website, including individual sections */
   --default-color: #fafafa; /* Default color used for the majority of the text content across the entire website */
   --heading-color: #ffffff; /* Color for headings, subheadings and title throughout the website */
@@ -29,11 +31,21 @@
 
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
-  --nav-color: rgba(255, 255, 255, 0.5);  /* The default color of the main navmenu links */
+  --nav-color: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* The default color of the main navmenu links */
   --nav-hover-color: #ffffff; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #1a1a1a; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #1a1a1a; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
-  --nav-dropdown-color: rgba(255, 255, 255, 0.5); /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-color: rgba(
+    255,
+    255,
+    255,
+    0.5
+  ); /* Used for navigation links of the dropdown items in the navigation menu. */
   --nav-dropdown-hover-color: #ffffff; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
@@ -271,7 +283,7 @@ h6 {
     padding-right: 0;
   }
 
-  .navmenu li:hover>a,
+  .navmenu li:hover > a,
   .navmenu .active,
   .navmenu .active:focus {
     color: var(--nav-hover-color);
@@ -309,11 +321,11 @@ h6 {
 
   .navmenu .dropdown ul a:hover,
   .navmenu .dropdown ul .active:hover,
-  .navmenu .dropdown ul li:hover>a {
+  .navmenu .dropdown ul li:hover > a {
     color: var(--nav-dropdown-hover-color);
   }
 
-  .navmenu .dropdown:hover>ul {
+  .navmenu .dropdown:hover > ul {
     opacity: 1;
     top: 100%;
     visibility: visible;
@@ -325,7 +337,7 @@ h6 {
     visibility: hidden;
   }
 
-  .navmenu .dropdown .dropdown:hover>ul {
+  .navmenu .dropdown .dropdown:hover > ul {
     opacity: 1;
     top: 0;
     left: -100%;
@@ -427,7 +439,7 @@ h6 {
     background-color: rgba(33, 37, 41, 0.1);
   }
 
-  .navmenu .dropdown>.dropdown-active {
+  .navmenu .dropdown > .dropdown-active {
     display: block;
     background-color: rgba(33, 37, 41, 0.03);
   }
@@ -454,7 +466,7 @@ h6 {
     transition: 0.3s;
   }
 
-  .mobile-nav-active .navmenu>ul {
+  .mobile-nav-active .navmenu > ul {
     display: block;
   }
 }
@@ -464,7 +476,8 @@ h6 {
 --------------------------------------------------------------*/
 .footer {
   --background-color: color-mix(in srgb, var(--default-color), transparent 95%);
-  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-top: 1px solid
+    color-mix(in srgb, var(--default-color), transparent 90%);
   color: var(--default-color);
   background-color: var(--background-color);
   font-size: 14px;
@@ -665,7 +678,8 @@ h6 {
 
 .page-title .heading {
   padding: 80px 0;
-  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  border-top: 1px solid
+    color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 .page-title .heading h1 {
@@ -705,11 +719,11 @@ h6 {
   font-weight: 600;
 }
 
-.page-title nav ol li+li {
+.page-title nav ol li + li {
   padding-left: 10px;
 }
 
-.page-title nav ol li+li::before {
+.page-title nav ol li + li::before {
   content: "/";
   display: inline-block;
   padding-right: 10px;
@@ -729,7 +743,6 @@ section,
 }
 
 @media (max-width: 1199px) {
-
   section,
   .section {
     scroll-margin-top: 66px;
@@ -1063,7 +1076,6 @@ section,
 }
 
 @media (max-width: 575px) {
-
   .gallery-details .swiper-button-prev,
   .gallery-details .swiper-button-next {
     display: none;
@@ -1278,7 +1290,8 @@ section,
 # Pricing Section
 --------------------------------------------------------------*/
 .pricing .pricing-item {
-  border-bottom: 1px dashed color-mix(in srgb, var(--default-color), transparent 60%);
+  border-bottom: 1px dashed
+    color-mix(in srgb, var(--default-color), transparent 60%);
   width: 100%;
   height: 100%;
   padding: 0 0 15px 0;
@@ -1341,8 +1354,8 @@ section,
   }
 }
 
-.contact .php-email-form input[type=text],
-.contact .php-email-form input[type=email],
+.contact .php-email-form input[type="text"],
+.contact .php-email-form input[type="email"],
 .contact .php-email-form textarea {
   font-size: 14px;
   padding: 10px 15px;
@@ -1353,19 +1366,19 @@ section,
   border-color: color-mix(in srgb, var(--default-color), transparent 80%);
 }
 
-.contact .php-email-form input[type=text]:focus,
-.contact .php-email-form input[type=email]:focus,
+.contact .php-email-form input[type="text"]:focus,
+.contact .php-email-form input[type="email"]:focus,
 .contact .php-email-form textarea:focus {
   border-color: var(--accent-color);
 }
 
-.contact .php-email-form input[type=text]::placeholder,
-.contact .php-email-form input[type=email]::placeholder,
+.contact .php-email-form input[type="text"]::placeholder,
+.contact .php-email-form input[type="email"]::placeholder,
 .contact .php-email-form textarea::placeholder {
   color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
-.contact .php-email-form button[type=submit] {
+.contact .php-email-form button[type="submit"] {
   color: var(--default-color);
   background: var(--accent-color);
   font-weight: 400;
@@ -1380,7 +1393,7 @@ section,
   letter-spacing: 1px;
 }
 
-.contact .php-email-form button[type=submit]:hover {
+.contact .php-email-form button[type="submit"]:hover {
   background-color: color-mix(in srgb, var(--accent-color) 90%, white 10%);
 }
 
@@ -1389,4 +1402,126 @@ section,
 --------------------------------------------------------------*/
 .starter-section {
   /* Add your styles here */
+}
+
+/* Light Mode Styles */
+
+/* Light Mode - Override nav color to black */
+body.light-mode {
+  --background-color: #ffffff; /* White background */
+  --default-color: #000000; /* Black text */
+  --heading-color: #000000; /* Black for headings */
+  --nav-color: #000000; /* Set navbar links to black in light mode */
+  --nav-hover-color: #000000; /* Set navbar hover links to black in light mode */
+  --surface-color: #ffffff; /* White surface color */
+  --contrast-color: #000000; /* Black contrast text color */
+}
+
+body.light-mode .footer {
+  background-color: #f8f9fa; /* Footer background */
+  color: #000000; /* Set footer text to black */
+}
+
+body.light-mode .scroll-top {
+  background-color: #f8f9fa; /* Scroll top button background */
+}
+
+body.light-mode .gallery-item {
+  border: 1px solid #ddd; /* Set gallery items to have light borders */
+}
+
+/* Dark Mode Styles (existing) */
+body.dark-mode {
+  background-color: #121212; /* Dark background for dark mode */
+  color: #ffffff; /* White text for dark mode */
+}
+
+body.dark-mode .navbar {
+  background-color: #333; /* Dark navbar background */
+}
+
+body.dark-mode .navbar a {
+  color: #ffffff; /* Dark mode navbar links */
+}
+
+body.dark-mode .footer {
+  background-color: #333; /* Dark footer background */
+  color: #ffffff; /* White footer text */
+}
+
+body.dark-mode .scroll-top {
+  background-color: #333; /* Dark scroll top button */
+}
+
+body.dark-mode .gallery-item {
+  border: 1px solid #444; /* Dark borders for gallery items */
+}
+/* Light Mode Styles */
+body.light-mode {
+  background-color: #ffffff; /* Set background to white in light mode */
+  color: #000000; /* Set text color to black in light mode */
+}
+
+body.light-mode .navbar {
+  background-color: #f8f9fa; /* Set navbar background to light in light mode */
+}
+
+body.light-mode .navbar a {
+  color: #000000; /* Set navbar links to black in light mode */
+}
+
+body.light-mode .footer {
+  background-color: #f8f9fa; /* Footer background */
+  color: #000000; /* Set footer text to black */
+}
+
+body.light-mode .footer a {
+  color: #000000; /* Set social media icons to black in light mode */
+}
+
+body.light-mode .footer a:hover {
+  color: #007bff; /* Add hover color for footer links */
+}
+
+body.light-mode .scroll-top {
+  background-color: #f8f9fa; /* Scroll top button background */
+}
+
+body.light-mode .gallery-item {
+  border: 1px solid #ddd; /* Set gallery items to have light borders */
+}
+
+/* Dark Mode Styles (existing) */
+body.dark-mode {
+  background-color: #121212; /* Dark background for dark mode */
+  color: #ffffff; /* White text for dark mode */
+}
+
+body.dark-mode .navbar {
+  background-color: #333; /* Dark navbar background */
+}
+
+body.dark-mode .navbar a {
+  color: #ffffff; /* Dark mode navbar links */
+}
+
+body.dark-mode .footer {
+  background-color: #333; /* Dark footer background */
+  color: #ffffff; /* White footer text */
+}
+
+body.dark-mode .footer a {
+  color: #ffffff; /* Set social media icons to white in dark mode */
+}
+
+body.dark-mode .footer a:hover {
+  color: #007bff; /* Add hover color for footer links */
+}
+
+body.dark-mode .scroll-top {
+  background-color: #333; /* Dark scroll top button */
+}
+
+body.dark-mode .gallery-item {
+  border: 1px solid #444; /* Dark borders for gallery items */
 }
