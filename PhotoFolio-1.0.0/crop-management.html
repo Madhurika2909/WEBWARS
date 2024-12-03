@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crop Management Dashboard for Vendors</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      .card {
+        background-color: #e9e9e9;
+        border-radius: 8px;
+        margin: 15px 0;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .card h3 {
+        margin-top: 0;
+      }
+      .btn {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #45a049;
+      }
+      .search-container {
+        text-align: center;
+        margin: 20px 0;
+      }
+      .search-container select {
+        padding: 10px;
+        width: 200px;
+        margin: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      .search-container button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+      }
+      .search-container button:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Crop Management Dashboard</h1>
+
+      <!-- Vendor Crop Search Section with Dropdown -->
+      <div class="search-container">
+        <select id="crop-name">
+          <option value="">Select a Crop</option>
+          <option value="maize">Maize</option>
+          <option value="wheat">Wheat</option>
+          <option value="rice">Rice</option>
+          <option value="tomato">Tomato</option>
+          <option value="carrot">Carrot</option>
+          <option value="potato">Potato</option>
+          <option value="cabbage">Cabbage</option>
+          <option value="onion">Onion</option>
+        </select>
+        <button id="search-crop">Get Crop Details</button>
+      </div>
+
+      <!-- Crop Details Section -->
+      <div id="crop-details" style="display: none">
+        <h2>Crop Details</h2>
+        <div id="crop-card" class="card">
+          <!-- Crop details will be displayed here -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const cropData = {
+        maize: {
+          name: "Maize",
+          growingMethod:
+            "Maize is grown in well-drained soil with regular irrigation. It requires full sunlight and is typically planted in rows, with a planting distance of about 30-40 cm between seeds.",
+          chemicalFreeMethod:
+            "To grow maize chemical-free, farmers use organic fertilizers like compost or animal manure. They rely on natural pest control methods like neem oil and companion planting (e.g., planting maize with beans to deter pests).",
+          maintenance:
+            "Maize crops are maintained by ensuring that they receive adequate water, avoiding overwatering which could lead to root rot. Regular weeding is done to prevent competition for nutrients, and the field is monitored for any signs of pests or diseases.",
+          expectedHarvest:
+            "The expected harvest time for maize is around 4-6 months after planting, depending on the variety and growing conditions. The crop is typically harvested when the kernels are fully developed, and the husk begins to turn brown.",
+        },
+        wheat: {
+          name: "Wheat",
+          growingMethod:
+            "Wheat is best grown in loamy soil with adequate moisture. It requires moderate sunlight, and farmers sow seeds in early winter or early spring, depending on the region.",
+          chemicalFreeMethod:
+            "Wheat is grown without synthetic pesticides by using organic fertilizers such as manure or crop residues. Natural methods of pest control, like planting garlic or onion around the wheat field, are also used to deter pests.",
+          maintenance:
+            "Wheat is maintained by ensuring that the soil remains moist, especially during the germination phase. Irrigation is controlled to avoid waterlogging. Crop rotation is practiced to maintain soil health and prevent soil depletion.",
+          expectedHarvest:
+            "Wheat is usually harvested after 6-8 months, once the grains have fully matured and the wheat heads have turned golden brown.",
+        },
+        rice: {
+          name: "Rice",
+          growingMethod:
+            "Rice is grown in flooded fields, also known as paddies, to ensure it receives sufficient water. The plant grows best in warm climates and requires heavy irrigation, especially during the growing season.",
+          chemicalFreeMethod:
+            "To grow rice organically, farmers use green manure, crop residues, and compost. They also employ integrated pest management (IPM) practices, which include using natural predators to control insects and maintaining soil health through organic matter.",
+          maintenance:
+            "Rice paddies require regular maintenance, including water management to keep the fields flooded. Farmers also control weeds and pests using organic methods like hand weeding and the use of waterfowl to reduce pests.",
+          expectedHarvest:
+            "Rice is harvested after about 3-4 months of growth, when the grains are mature and the plant begins to turn yellow. It is usually harvested during the dry season.",
+        },
+        tomato: {
+          name: "Tomato",
+          growingMethod:
+            "Tomatoes grow best in well-drained, nutrient-rich soil with plenty of sunlight. The plants should be spaced around 24-36 inches apart to allow them to grow properly.",
+          chemicalFreeMethod:
+            "Tomatoes are grown organically by using organic compost and mulch. Natural pest control methods such as neem oil, marigold companion plants, and crop rotation are utilized to avoid chemical pesticides.",
+          maintenance:
+            "Tomatoes need regular watering, especially during dry periods. Proper pruning and staking help in maintaining the plants, preventing disease, and ensuring good airflow to reduce the chance of fungal infection.",
+          expectedHarvest:
+            "Tomatoes are typically harvested 60-85 days after planting, depending on the variety. The fruit is ready to pick when it is fully colored and firm to the touch.",
+        },
+        carrot: {
+          name: "Carrot",
+          growingMethod:
+            "Carrots prefer loose, well-drained soil with good fertility. They require cool temperatures, so they are typically planted in early spring or late summer for a fall harvest.",
+          chemicalFreeMethod:
+            "Carrots are grown without chemicals using organic compost and manure for soil fertility. Natural pest control like garlic, onion, and other companion plants are used to deter pests.",
+          maintenance:
+            "Carrot plants are maintained by regular thinning to ensure enough space for the roots to grow. Weeding and mulching help retain moisture and prevent weed growth.",
+          expectedHarvest:
+            "Carrots are usually ready to harvest in 2-3 months, depending on the variety. The tops of the carrots begin to show above the soil when they are ready for harvest.",
+        },
+        potato: {
+          name: "Potato",
+          growingMethod:
+            "Potatoes are grown in loose, well-drained soil. They need plenty of sunlight and moderate watering, with the tubers planted around 4-6 inches deep.",
+          chemicalFreeMethod:
+            "Potatoes are grown chemical-free using organic fertilizers such as compost or manure. Natural pest control methods, like crop rotation and using organic pesticides, are employed to protect the crop.",
+          maintenance:
+            "Potatoes need to be regularly watered, especially during dry spells. Farmers mound the soil around the plant stems to protect the growing tubers from sunlight, which could turn them green and toxic.",
+          expectedHarvest:
+            "Potatoes are typically harvested around 3-4 months after planting, once the plants begin to flower and the stems start to die back.",
+        },
+        cabbage: {
+          name: "Cabbage",
+          growingMethod:
+            "Cabbages grow best in fertile, well-drained soil with a slightly acidic pH. They need regular watering, especially in dry periods, and they prefer cooler weather.",
+          chemicalFreeMethod:
+            "Cabbages are grown using organic methods, with organic compost used for soil fertility. Natural pest control includes using neem oil and introducing beneficial insects like ladybugs to control aphids.",
+          maintenance:
+            "Cabbage plants need to be spaced properly to allow for airflow and to prevent diseases. Regular watering and mulching help conserve moisture and control weeds.",
+          expectedHarvest:
+            "Cabbages are typically ready for harvest in 3-5 months, depending on the variety. The heads should feel firm when squeezed to ensure they are fully matured.",
+        },
+        onion: {
+          name: "Onion",
+          growingMethod:
+            "Onions grow well in loose, well-drained soil. They require full sunlight and moderate watering, with the soil kept consistently moist but not waterlogged.",
+          chemicalFreeMethod:
+            "Onions are grown without chemicals using organic fertilizers and natural pest control like neem oil and crop rotation to keep pests and diseases at bay.",
+          maintenance:
+            "Onion plants require regular watering but must not be overwatered. They are maintained by controlling weeds, ensuring proper spacing, and using organic mulch to keep the soil moist.",
+          expectedHarvest:
+            "Onions are ready for harvest when the tops begin to fall over and turn brown, typically in 3-4 months.",
+        },
+      };
+
+      // Handle the search functionality
+      document
+        .getElementById("search-crop")
+        .addEventListener("click", function () {
+          const cropName = document
+            .getElementById("crop-name")
+            .value.toLowerCase();
+          const crop = cropData[cropName];
+
+          if (crop) {
+            document.getElementById("crop-details").style.display = "block";
+            document.getElementById("crop-card").innerHTML = `
+                    <h3>${crop.name}</h3>
+                    <p><strong>Growing Method:</strong> ${crop.growingMethod}</p>
+                    <p><strong>Chemical-Free Method:</strong> ${crop.chemicalFreeMethod}</p>
+                    <p><strong>Maintenance:</strong> ${crop.maintenance}</p>
+                    <p><strong>Expected Harvest:</strong> ${crop.expectedHarvest}</p>
+                `;
+          } else {
+            alert("Crop not found.");
+          }
+        });
+    </script>
+  </body>
+</html>
