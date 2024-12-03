@@ -521,6 +521,7 @@ h6 {
 /*--------------------------------------------------------------
 # Preloader
 --------------------------------------------------------------*/
+
 #preloader {
   display: flex;
   position: fixed;
@@ -792,11 +793,32 @@ section,
 --------------------------------------------------------------*/
 .hero {
   width: 100%;
-  min-height: 30vh;
+  height: 100vh; /* Ensure the hero section takes full height */
   position: relative;
-  padding: 120px 0 60px 0;
   display: flex;
   align-items: center;
+  overflow: hidden;
+}
+
+.video-background {
+  position: absolute; /* Positions the video in relation to the hero section */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the video covers the entire section */
+  z-index: -1; /* Keeps the video in the background */
+}
+
+video {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero .container {
+  position: relative; /* Ensures the text is on top of the video */
+  z-index: 1;
 }
 
 .hero h2 {

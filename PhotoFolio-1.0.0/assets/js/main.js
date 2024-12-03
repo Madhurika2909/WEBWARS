@@ -63,14 +63,30 @@
    */
   const preloader = document.querySelector('#preloader');
   if (preloader) {
-    window.addEventListener('load', () => {
+    window.addEventListener("load", () => {
       setTimeout(() => {
-        preloader.classList.add('loaded');
+        preloader.classList.add("loaded");
       }, 1000);
       setTimeout(() => {
         preloader.remove();
       }, 2000);
     });
+    const preloader = document.querySelector("#preloader");
+    if (preloader) {
+      window.addEventListener("load", () => {
+        // Adding delay to add 'loaded' class and trigger animations
+        setTimeout(() => {
+          preloader.classList.add("loaded");
+        }, 1000);
+
+        // Remove preloader and hide it from the page
+        setTimeout(() => {
+          preloader.remove();
+          // Alternatively, to hide instead of removing the element, use:
+          // preloader.style.display = 'none';
+        }, 2000);
+      });
+    }
   }
 
   /**
