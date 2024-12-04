@@ -44,10 +44,11 @@
           cropCard.innerHTML = `
             <img src="${crop.image}" alt="${crop.cropName}" />
             <div class="crop-info">
-              <h3>${crop.cropName}</h3>
+              <p>Farmer Name: ₹${crop.farmer - name}</p>
+              <p>Location: ₹${crop.crop - location}</p>
+              <p>Kg: ₹${crop.Kg} per Kg</p>
+              <p>Crop Name: ₹${crop.cropName} per Kg</p>
               <p>Price: ₹${crop.price} per Kg</p>
-              <p><strong>Farmer:</strong> ${crop.farmerName}</p>
-              <p><strong>Contact:</strong> ${crop.contact}</p>
               <button class="btn purchase-btn">Buy Crop</button>
             </div>
           `;
