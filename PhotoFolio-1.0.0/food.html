@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Sharing Platform</title>
+    <link rel="stylesheet" href="food.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Food Sharing Platform</h1>
+    </header>
+
+    <main>
+      <!-- Landing Page -->
+      <section id="landing-page">
+        <h2>Choose an Option</h2>
+        <button id="give-food">Give Food</button>
+        <button id="buy-food">Buy Food</button>
+      </section>
+
+      <!-- Giving Food Section -->
+      <section id="give-food-section" class="hidden">
+        <h2>Give Food</h2>
+        <form id="give-food-form">
+          <label for="giver-name">Name:</label>
+          <input type="text" id="giver-name" required />
+
+          <label for="food-type">Type of Food:</label>
+          <input type="text" id="food-type" required />
+
+          <label for="location">Location:</label>
+          <input type="text" id="location" required />
+
+          <label for="quantity">Quantity:</label>
+          <input type="text" id="quantity" required />
+
+          <label for="made-date">When was the food made?</label>
+          <input type="date" id="made-date" required />
+
+          <label for="expiry-date">Till when can it be eaten?</label>
+          <input type="date" id="expiry-date" required />
+
+          <button type="submit">Upload Food</button>
+        </form>
+      </section>
+
+      <!-- Buying Food Section -->
+      <section id="buy-food-section" class="hidden">
+        <h2>Available Food</h2>
+        <ul id="food-list"></ul>
+      </section>
+    </main>
+
+    <script src="food.js"></script>
+  </body>
+</html>
