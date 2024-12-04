@@ -27,14 +27,32 @@ document.addEventListener("DOMContentLoaded", () => {
   giveFoodForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    // Form validation
+    const name = document.getElementById("giver-name").value.trim();
+    const type = document.getElementById("food-type").value.trim();
+    const location = document.getElementById("location").value.trim();
+    const quantity = document.getElementById("quantity").value.trim();
+    const madeDate = document.getElementById("made-date").value.trim();
+    const expiryDate = document.getElementById("expiry-date").value.trim();
+
+    if (!name || !type || !location || !quantity || !madeDate || !expiryDate) {
+      alert("All fields are required!");
+      return;
+    }
+
+    if (isNaN(quantity) || quantity <= 0) {
+      alert("Quantity must be a positive number.");
+      return;
+    }
+
     const newFood = {
       id: Date.now(),
-      name: document.getElementById("giver-name").value,
-      type: document.getElementById("food-type").value,
-      location: document.getElementById("location").value,
-      quantity: document.getElementById("quantity").value,
-      madeDate: document.getElementById("made-date").value,
-      expiryDate: document.getElementById("expiry-date").value,
+      name: name,
+      type: type,
+      location: location,
+      quantity: quantity,
+      madeDate: madeDate,
+      expiryDate: expiryDate,
     };
 
     foodItems.push(newFood);

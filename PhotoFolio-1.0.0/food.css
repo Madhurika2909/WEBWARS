@@ -22,20 +22,28 @@ main {
 .hidden {
   display: none;
 }
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30%;
+  gap: 20px;
+}
 
 button {
-  padding: 10px 20px;
-  margin: 10px;
+  position: relative;
+  padding: 20px 30px;
   background-color: #4caf50;
   color: white;
   border: none;
   cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #45a049;
 }
-
 form {
   display: flex;
   flex-direction: column;
