@@ -1,102 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vendor Dashboard</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        padding: 0;
-        background-color: #f4f4f4;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vendor Dashboard</title>
+  <style>
+    .back-button {
+      position: absolute;
+      /* Absolute positioning for the top-left corner */
+      top: 20px;
+      /* Adjust distance from the top */
+      left: 20px;
+      /* Adjust distance from the left */
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: bold;
+      color: #ffffff;
+      /* White text */
+      background-color: #3cb371;
+      /* Green background */
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      z-index: 1000;
+      /* Ensures the button stays on top of other elements */
+    }
+
+    .back-button:hover {
+      background-color: #2e8b57;
+      /* Darker green on hover */
+      transform: scale(1.05);
+      /* Slightly increase size on hover */
+    }
+
+    .back-button:active {
+      background-color: #276747;
+      /* Even darker green when active */
+      transform: scale(0.95);
+      /* Slightly shrink on click */
+    }
+
+    .back-button:focus {
+      outline: none;
+      box-shadow: 0 0 5px 2px rgba(60, 179, 113, 0.7);
+      /* Add a green glow when focused */
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    input,
+    button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="index.html" class="back-button">← Home</a>
+    <h2>Vendor Dashboard</h2>
+    <h3>Add Land Details</h3>
+    <input type="text" id="land-name" placeholder="Land Name" required />
+    <input type="number" id="land-area" placeholder="Area (Acres)" required />
+    <input type="number" id="land-price" placeholder="Price (₹/month)" required />
+    <input type="text" id="land-location" placeholder="Location" required />
+    <input type="number" id="land-distance" placeholder="Distance (km)" required />
+    <button id="add-land">Add Land</button>
+  </div>
+
+  <script>
+    document.getElementById("add-land").addEventListener("click", () => {
+      const name = document.getElementById("land-name").value;
+      const area = document.getElementById("land-area").value;
+      const price = document.getElementById("land-price").value;
+      const location = document.getElementById("land-location").value;
+      const distance = document.getElementById("land-distance").value;
+
+      if (name && area && price && location && distance) {
+        const landDetails = {
+          name,
+          area,
+          price,
+          location,
+          distance,
+        };
+
+        // Retrieve existing lands from localStorage or initialize an empty array
+        let lands = JSON.parse(localStorage.getItem("lands")) || [];
+
+        // Add the new land to the array
+        lands.push(landDetails);
+
+        // Save the updated array back to localStorage
+        localStorage.setItem("lands", JSON.stringify(lands));
+
+        alert("Land added successfully");
+
+        // Optionally, clear the form
+        document.getElementById("land-name").value = "";
+        document.getElementById("land-area").value = "";
+        document.getElementById("land-price").value = "";
+        document.getElementById("land-location").value = "";
+        document.getElementById("land-distance").value = "";
+      } else {
+        alert("Please fill in all fields!");
       }
-      .container {
-        max-width: 600px;
-        margin: auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
-      input,
-      button {
-        width: 100%;
-        padding: 10px;
-        margin: 8px 0;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-      }
-      button {
-        background-color: #4caf50;
-        color: white;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #45a049;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h2>Vendor Dashboard</h2>
-      <h3>Add Land Details</h3>
-      <input type="text" id="land-name" placeholder="Land Name" required />
-      <input type="number" id="land-area" placeholder="Area (Acres)" required />
-      <input
-        type="number"
-        id="land-price"
-        placeholder="Price (₹/month)"
-        required
-      />
-      <input type="text" id="land-location" placeholder="Location" required />
-      <input
-        type="number"
-        id="land-distance"
-        placeholder="Distance (km)"
-        required
-      />
-      <button id="add-land">Add Land</button>
-    </div>
+    });
+  </script>
+</body>
 
-    <script>
-      document.getElementById("add-land").addEventListener("click", () => {
-        const name = document.getElementById("land-name").value;
-        const area = document.getElementById("land-area").value;
-        const price = document.getElementById("land-price").value;
-        const location = document.getElementById("land-location").value;
-        const distance = document.getElementById("land-distance").value;
-
-        if (name && area && price && location && distance) {
-          const landDetails = {
-            name,
-            area,
-            price,
-            location,
-            distance,
-          };
-
-          // Retrieve existing lands from localStorage or initialize an empty array
-          let lands = JSON.parse(localStorage.getItem("lands")) || [];
-
-          // Add the new land to the array
-          lands.push(landDetails);
-
-          // Save the updated array back to localStorage
-          localStorage.setItem("lands", JSON.stringify(lands));
-
-          alert("Land added successfully");
-
-          // Optionally, clear the form
-          document.getElementById("land-name").value = "";
-          document.getElementById("land-area").value = "";
-          document.getElementById("land-price").value = "";
-          document.getElementById("land-location").value = "";
-          document.getElementById("land-distance").value = "";
-        } else {
-          alert("Please fill in all fields!");
-        }
-      });
-    </script>
-  </body>
 </html>
