@@ -14,13 +14,48 @@
     <main>
       <!-- Landing Page -->
       <section id="landing-page">
+        <a
+          href="index.html"
+          class="back-button"
+          style="
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 18px;
+            color: #333;
+            text-decoration: none;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+          "
+          >← Home</a
+        >
         <h2>Choose an Option</h2>
-        <button id="give-food">Give Food</button>
-        <button id="buy-food">Buy Food</button>
+        <div class="button-container">
+          <button id="give-food">Give Food</button>
+          <button id="buy-food">Buy Food</button>
+        </div>
       </section>
 
       <!-- Giving Food Section -->
       <section id="give-food-section" class="hidden">
+        <a
+          href="food.html"
+          class="back-button"
+          style="
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 18px;
+            color: #333;
+            text-decoration: none;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+          "
+          >← Food</a
+        >
         <h2>Give Food</h2>
         <form id="give-food-form">
           <label for="giver-name">Name:</label>
@@ -47,6 +82,22 @@
 
       <!-- Buying Food Section -->
       <section id="buy-food-section" class="hidden">
+        <a
+          href="food.html"
+          class="back-button"
+          style="
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 18px;
+            color: #333;
+            text-decoration: none;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+          "
+          >← Food</a
+        >
         <h2>Available Food</h2>
         <ul id="food-list"></ul>
       </section>
