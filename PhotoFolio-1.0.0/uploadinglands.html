@@ -6,73 +6,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vendor Dashboard</title>
   <style>
+    /* Back Button Styles */
     .back-button {
       position: absolute;
-      /* Absolute positioning for the top-left corner */
       top: 20px;
-      /* Adjust distance from the top */
       left: 20px;
-      /* Adjust distance from the left */
       text-decoration: none;
       font-size: 16px;
       font-weight: bold;
       color: #ffffff;
-      /* White text */
       background-color: #3cb371;
-      /* Green background */
       padding: 10px 15px;
       border-radius: 5px;
       transition: background-color 0.3s ease, transform 0.2s ease;
       z-index: 1000;
-      /* Ensures the button stays on top of other elements */
     }
 
     .back-button:hover {
       background-color: #2e8b57;
-      /* Darker green on hover */
       transform: scale(1.05);
-      /* Slightly increase size on hover */
     }
 
     .back-button:active {
       background-color: #276747;
-      /* Even darker green when active */
       transform: scale(0.95);
-      /* Slightly shrink on click */
     }
 
     .back-button:focus {
       outline: none;
       box-shadow: 0 0 5px 2px rgba(60, 179, 113, 0.7);
-      /* Add a green glow when focused */
     }
 
+    /* General Styles */
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
+      margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
+      background-color: #000;
+      color: white;
     }
 
-    .container {
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    input,
-    button {
+    /* Video Background */
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
+      height: 100%;
+      z-index: -1; /* Behind all other elements */
+      overflow: hidden;
+    }
+
+    .video-background video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensure the video covers the entire screen */
+    }
+
+    /* Centered Foreground Content */
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 600px;
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.4);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2); /* Subtle glow effect */
+      color: #fff; /* Ensure text is visible */
+      text-align: center; /* Center-align text */
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      margin-bottom: 15px;
+    }
+
+    input{
+      width: 70%;
       padding: 10px;
       margin: 8px 0;
       border-radius: 5px;
       border: 1px solid #ccc;
+      font-size: 16px;
+      background-color: #ffffff; /* Visible white input fields */
+      color: #333; /* Dark text inside inputs */
     }
 
-    button {
+    button{
+      width: 40%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
       background-color: #4caf50;
       color: white;
       cursor: pointer;
@@ -85,8 +116,19 @@
 </head>
 
 <body>
+  <!-- Video Background -->
+  <div class="video-background">
+    <video autoplay loop muted playsinline>
+      <source src="./assets/video/Globe.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Back Button -->
+  <a href="index.html" class="back-button">← Home</a>
+
+  <!-- Foreground Content -->
   <div class="container">
-    <a href="index.html" class="back-button">← Home</a>
     <h2>Vendor Dashboard</h2>
     <h3>Add Land Details</h3>
     <input type="text" id="land-name" placeholder="Land Name" required />
