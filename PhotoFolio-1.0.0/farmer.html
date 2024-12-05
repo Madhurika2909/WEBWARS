@@ -7,6 +7,22 @@
     <link rel="stylesheet" href="farmer.css" />
   </head>
   <body>
+    <!-- Background Video -->
+    <video id="background-video" autoplay muted loop>
+      <source src="./assets/video/farm.mov" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <video id="background-video2" autoplay muted loop>
+      <source src="./assets/video/farm.mov" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
+    <video id="background-video3" autoplay muted loop>
+      <source src="./assets/video/farm.mov" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+
     <header class="header">
       <h1>🌾 FarmConnect</h1>
       <p>Your Gateway to Smarter Farming</p>
@@ -257,46 +273,27 @@
           // Add event listeners to "Buy" buttons
           const buyButtons = document.querySelectorAll(".buy-btn");
           buyButtons.forEach((button) => {
-            button.addEventListener("click", (e) => {
-              const index = e.target.dataset.index;
-              buyCrop(index);
+            button.addEventListener("click", () => {
+              const cropIndex = button.getAttribute("data-index");
+              const selectedCrop = crops[cropIndex];
+              alert(
+                `You selected ${selectedCrop.cropName}. Price: ₹${selectedCrop.price}`
+              );
             });
           });
         }
 
-        // Buy crop functionality (removes the crop from the list)
-        function buyCrop(index) {
-          const crops = JSON.parse(localStorage.getItem("crops")) || [];
-          crops.splice(index, 1); // Remove crop from the list
-          localStorage.setItem("crops", JSON.stringify(crops));
-
-          // Update the crop list
-          displayUploadedCrops();
-        }
-
-        // Clear all crops functionality
+        // Clear all uploaded crops from localStorage and the page
         clearCropsButton.addEventListener("click", () => {
           localStorage.removeItem("crops");
-          displayUploadedCrops();
+          uploadedCropsList.innerHTML = "<p>No crops uploaded yet.</p>";
+          cropChart.data.labels = [];
+          cropChart.data.datasets[0].data = [];
+          cropChart.update();
         });
 
-        // Initial load of uploaded crops
+        // Initially display uploaded crops
         displayUploadedCrops();
-
-        // Chat functionality
-        const chatMessages = document.getElementById("messages");
-        document
-          .getElementById("send-message")
-          .addEventListener("click", () => {
-            const input = document.getElementById("chat-message");
-            if (input.value.trim()) {
-              const message = document.createElement("div");
-              message.className = "message";
-              message.textContent = `Farmer: ${input.value}`;
-              chatMessages.appendChild(message);
-              input.value = "";
-            }
-          });
       });
     </script>
   </body>

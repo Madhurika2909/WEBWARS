@@ -7,13 +7,34 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background: url("../PhotoFolio-1.0.0/assets/img/gallery/1.avif") no-repeat
-    center center fixed;
-  background-size: cover;
   color: #333;
   line-height: 1.6;
-  animation: fade-in-background 3s ease-in-out;
-  height: 100vh;
+  margin: 0;
+  height: 300vh; /* Allow room for three video elements (1 full viewport height for each) */
+}
+
+#background-video,
+#background-video2,
+#background-video3 {
+  position: absolute; /* Positioned behind content */
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Ensure each video covers one viewport height */
+  object-fit: cover; /* Ensures the video covers the entire area without distortion */
+  z-index: -1; /* Keeps the video behind the content */
+  object-position: center; /* Ensures the video remains centered if it's scaled */
+}
+
+#background-video {
+  top: 0; /* First video at the top of the viewport */
+}
+
+#background-video2 {
+  top: 100vh; /* Second video positioned below the first one */
+}
+
+#background-video3 {
+  top: 200vh; /* Third video positioned below the second one */
 }
 
 @keyframes fade-in-background {
@@ -36,7 +57,6 @@ a {
 }
 
 header {
-  background: rgba(99, 194, 103, 0.8); /* Slight transparency */
   color: rgb(254, 248, 248);
   text-align: center;
   padding: 20px 15px; /* Adjusted padding for consistency */
@@ -62,7 +82,7 @@ main {
 section {
   margin-bottom: 40px;
   padding: 20px;
-  background: rgb(218, 242, 214);
+  background: rgb(191, 208, 188);
   border-radius: 10px;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
   transform: translateY(20px);
@@ -165,7 +185,6 @@ input[type="file"] {
 footer {
   text-align: center;
   padding: 12px;
-  background: #4caf50;
   color: white;
   font-size: 1.2em;
 }
