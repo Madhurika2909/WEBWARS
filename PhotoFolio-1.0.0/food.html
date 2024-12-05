@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="food.css" />
   </head>
   <body>
+    <video id="background-video" autoplay muted loop>
+      <source src="./assets/video/food.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
     <header>
       <h1>Food Sharing Platform</h1>
     </header>
@@ -56,28 +60,31 @@
           "
           >← Food</a
         >
-        <h2>Give Food</h2>
-        <form id="give-food-form">
-          <label for="giver-name">Name:</label>
-          <input type="text" id="giver-name" required />
+        <!-- Transparent Box -->
+        <div class="transparent-box">
+          <h2>Give Food</h2>
+          <form id="give-food-form">
+            <label for="giver-name">Name:</label>
+            <input type="text" id="giver-name" required />
 
-          <label for="food-type">Type of Food:</label>
-          <input type="text" id="food-type" required />
+            <label for="food-type">Type of Food:</label>
+            <input type="text" id="food-type" required />
 
-          <label for="location">Location:</label>
-          <input type="text" id="location" required />
+            <label for="location">Location:</label>
+            <input type="text" id="location" required />
 
-          <label for="quantity">Quantity:</label>
-          <input type="text" id="quantity" required />
+            <label for="quantity">Quantity:</label>
+            <input type="text" id="quantity" required />
 
-          <label for="made-date">When was the food made?</label>
-          <input type="date" id="made-date" required />
+            <label for="made-date">When was the food made?</label>
+            <input type="date" id="made-date" required />
 
-          <label for="expiry-date">Till when can it be eaten?</label>
-          <input type="date" id="expiry-date" required />
+            <label for="expiry-date">Till when can it be eaten?</label>
+            <input type="date" id="expiry-date" required />
 
-          <button type="submit">Upload Food</button>
-        </form>
+            <button type="submit">Upload Food</button>
+          </form>
+        </div>
       </section>
 
       <!-- Buying Food Section -->
@@ -95,6 +102,7 @@
             background-color: #fff;
             padding: 10px;
             border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
           "
           >← Food</a
         >

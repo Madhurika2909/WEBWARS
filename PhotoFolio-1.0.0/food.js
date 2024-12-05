@@ -23,6 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
     buyFoodSection.classList.remove("hidden");
   });
 
+  // Back button functionality
+  document.querySelectorAll(".back-button").forEach((button) => {
+    button.addEventListener("click", () => {
+      buyFoodSection.classList.add("hidden");
+      giveFoodSection.classList.add("hidden");
+      landingPage.classList.remove("hidden");
+    });
+  });
+
   // Handle food submission
   giveFoodForm.addEventListener("submit", (e) => {
     e.preventDefault();

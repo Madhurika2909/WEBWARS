@@ -21,13 +21,13 @@ body {
 
 header {
   text-align: center;
-  padding: 20px;
-  background: rgba(
+  padding: 10px;
+  /* background: rgba(
     76,
     175,
     80,
     0.7
-  ); /* Slight transparency for overlay effect */
+  ); Slight transparency for overlay effect */
   color: #fff;
 }
 
@@ -71,7 +71,13 @@ form {
 }
 
 form label {
-  margin: 10px 0 5px;
+  margin: 10px 10px 5px;
+}
+label {
+  color: white; /* Sets the text color of all labels to white */
+  padding-right: 100px;
+  font-size: 16px; /* Optional: Adjust font size */
+  font-weight: bold; /* Optional: Make the text bold */
 }
 
 form input {
@@ -81,7 +87,7 @@ form input {
 
 #food-list {
   list-style: none;
-  padding: 0;
+  padding: 0px;
 }
 
 .food-item {
@@ -93,5 +99,46 @@ form input {
 }
 
 .food-item button {
-  background: #f44336;
+  background: #44c91f;
+  padding: auto;
+}
+
+h2 {
+  color: white;
+}
+.transparent-box {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.2
+  ); /* White background with 80% opacity */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Add a shadow */
+  max-width: 600px; /* Optional: Limit the box width */
+  margin: 20px auto; /* Center the box */
+}
+section {
+  height: 80vh;
+  max-width: 100%;
+  overflow-y: auto; /* Enables scrolling */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 30px;
+}
+section::-webkit-scrollbar {
+  width: 10px; /* Adjust the scrollbar width */
+}
+
+section::-webkit-scrollbar-thumb {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Scrollbar thumb color with transparency */
+  border-radius: 5px;
 }
