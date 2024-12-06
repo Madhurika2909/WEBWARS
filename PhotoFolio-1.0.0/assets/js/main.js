@@ -1,10 +1,10 @@
 /**
-* Template Name: PhotoFolio
-* Template URL: https://bootstrapmade.com/photofolio-bootstrap-photography-website-template/
-* Updated: Aug 07 2024 with Bootstrap v5.3.3
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
+ * Template Name: TerraSprout
+ * Template URL: https://bootstrapmade.com/TerraSprout-bootstrap-photography-website-template/
+ * Updated: Aug 07 2024 with Bootstrap v5.3.3
+ * Author: BootstrapMade.com
+ * License: https://bootstrapmade.com/license/
+ */
 
 (function () {
   "use strict";
@@ -13,47 +13,53 @@
    * Apply .scrolled class to the body as the page is scrolled down
    */
   function toggleScrolled() {
-    const selectBody = document.querySelector('body');
-    const selectHeader = document.querySelector('#header');
-    if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
-    window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
+    const selectBody = document.querySelector("body");
+    const selectHeader = document.querySelector("#header");
+    if (
+      !selectHeader.classList.contains("scroll-up-sticky") &&
+      !selectHeader.classList.contains("sticky-top") &&
+      !selectHeader.classList.contains("fixed-top")
+    )
+      return;
+    window.scrollY > 100
+      ? selectBody.classList.add("scrolled")
+      : selectBody.classList.remove("scrolled");
   }
 
-  document.addEventListener('scroll', toggleScrolled);
-  window.addEventListener('load', toggleScrolled);
+  document.addEventListener("scroll", toggleScrolled);
+  window.addEventListener("load", toggleScrolled);
 
   /**
    * Mobile nav toggle
    */
-  const mobileNavToggleBtn = document.querySelector('.mobile-nav-toggle');
+  const mobileNavToggleBtn = document.querySelector(".mobile-nav-toggle");
 
   function mobileNavToogle() {
-    document.querySelector('body').classList.toggle('mobile-nav-active');
-    mobileNavToggleBtn.classList.toggle('bi-list');
-    mobileNavToggleBtn.classList.toggle('bi-x');
+    document.querySelector("body").classList.toggle("mobile-nav-active");
+    mobileNavToggleBtn.classList.toggle("bi-list");
+    mobileNavToggleBtn.classList.toggle("bi-x");
   }
-  mobileNavToggleBtn.addEventListener('click', mobileNavToogle);
+  mobileNavToggleBtn.addEventListener("click", mobileNavToogle);
 
   /**
    * Hide mobile nav on same-page/hash links
    */
-  document.querySelectorAll('#navmenu a').forEach(navmenu => {
-    navmenu.addEventListener('click', () => {
-      if (document.querySelector('.mobile-nav-active')) {
+  document.querySelectorAll("#navmenu a").forEach((navmenu) => {
+    navmenu.addEventListener("click", () => {
+      if (document.querySelector(".mobile-nav-active")) {
         mobileNavToogle();
       }
     });
-
   });
 
   /**
    * Toggle mobile nav dropdowns
    */
-  document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
-    navmenu.addEventListener('click', function (e) {
+  document.querySelectorAll(".navmenu .toggle-dropdown").forEach((navmenu) => {
+    navmenu.addEventListener("click", function (e) {
       e.preventDefault();
-      this.parentNode.classList.toggle('active');
-      this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
+      this.parentNode.classList.toggle("active");
+      this.parentNode.nextElementSibling.classList.toggle("dropdown-active");
       e.stopImmediatePropagation();
     });
   });
@@ -61,7 +67,7 @@
   /**
    * Preloader
    */
-  const preloader = document.querySelector('#preloader');
+  const preloader = document.querySelector("#preloader");
   if (preloader) {
     window.addEventListener("load", () => {
       setTimeout(() => {
@@ -92,23 +98,25 @@
   /**
    * Scroll top button
    */
-  let scrollTop = document.querySelector('.scroll-top');
+  let scrollTop = document.querySelector(".scroll-top");
 
   function toggleScrollTop() {
     if (scrollTop) {
-      window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
+      window.scrollY > 100
+        ? scrollTop.classList.add("active")
+        : scrollTop.classList.remove("active");
     }
   }
-  scrollTop.addEventListener('click', (e) => {
+  scrollTop.addEventListener("click", (e) => {
     e.preventDefault();
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   });
 
-  window.addEventListener('load', toggleScrollTop);
-  document.addEventListener('scroll', toggleScrollTop);
+  window.addEventListener("load", toggleScrollTop);
+  document.addEventListener("scroll", toggleScrollTop);
 
   /**
    * Animation on scroll function and init
@@ -116,18 +124,18 @@
   function aosInit() {
     AOS.init({
       duration: 600,
-      easing: 'ease-in-out',
+      easing: "ease-in-out",
       once: true,
-      mirror: false
+      mirror: false,
     });
   }
-  window.addEventListener('load', aosInit);
+  window.addEventListener("load", aosInit);
 
   /**
    * Initiate glightbox
    */
   const glightbox = GLightbox({
-    selector: '.glightbox'
+    selector: ".glightbox",
   });
 
   /**
@@ -148,7 +156,6 @@
   }
 
   window.addEventListener("load", initSwiper);
-
 })();
 
 (function () {
@@ -159,30 +166,31 @@
 
   // Function to set mode
   function setMode(mode) {
-    const body = document.querySelector('body');
-    if (mode === 'light') {
-      body.classList.add('light-mode');
-      body.classList.remove('dark-mode');
-      modeToggleBtn.innerHTML = '🌙'; // Set to moon for dark mode
+    const body = document.querySelector("body");
+    if (mode === "light") {
+      body.classList.add("light-mode");
+      body.classList.remove("dark-mode");
+      modeToggleBtn.innerHTML = "🌙"; // Set to moon for dark mode
     } else {
-      body.classList.add('dark-mode');
-      body.classList.remove('light-mode');
-      modeToggleBtn.innerHTML = '🌞'; // Set to sun for light mode
+      body.classList.add("dark-mode");
+      body.classList.remove("light-mode");
+      modeToggleBtn.innerHTML = "🌞"; // Set to sun for light mode
     }
   }
 
   // Initialize mode on page load from localStorage
-  window.addEventListener('load', () => {
-    const savedMode = localStorage.getItem('mode') || 'dark';
+  window.addEventListener("load", () => {
+    const savedMode = localStorage.getItem("mode") || "dark";
     setMode(savedMode);
   });
 
   // Toggle between dark and light mode on button click
-  modeToggleBtn.addEventListener('click', () => {
-    const currentMode = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-    const newMode = currentMode === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('mode', newMode);  // Save the mode in localStorage
+  modeToggleBtn.addEventListener("click", () => {
+    const currentMode = document.body.classList.contains("dark-mode")
+      ? "dark"
+      : "light";
+    const newMode = currentMode === "dark" ? "light" : "dark";
+    localStorage.setItem("mode", newMode); // Save the mode in localStorage
     setMode(newMode);
   });
-
 })();
